@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- ===== CONFIGURAÇÕES BÁSICAS DA PÁGINA ===== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Padaria Pão Dourado | Pães quentinhos todo dia</title>
+  <meta name="description" content="Padaria Pão Dourado: pães artesanais, bolos, salgados e café fresquinho. Faça seu pedido pelo WhatsApp!">
+
+  <!-- Ícone da aba do navegador (um emoji de pão, sem precisar de arquivo) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥖</text></svg>">
+
+  <!-- Fontes do Google: uma para títulos e outra para textos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Nosso arquivo de estilos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== CABEÇALHO / MENU ===== -->
+  <header class="header" id="header">
+    <div class="container header__conteudo">
+      <a href="#inicio" class="logo">🥖 Pão <span>Dourado</span></a>
+
+      <!-- Botão "hambúrguer" que só aparece no celular -->
+      <button class="menu-botao" id="menuBotao" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="menu" id="menu">
+        <a href="#inicio">Início</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato">Contato</a>
+        <!-- Botão do carrinho: o número é atualizado pelo JavaScript -->
+        <button class="carrinho-botao" id="abrirCarrinho" aria-label="Abrir pedido">
+          🛒 <span class="carrinho-contador" id="contadorCarrinho">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== SEÇÃO PRINCIPAL (HERO) ===== -->
+    <section class="hero" id="inicio">
+      <div class="container hero__conteudo">
+        <div class="hero__texto">
+          <!-- O JavaScript troca este texto para "Aberto agora" ou "Fechado agora" -->
+          <p class="status" id="statusLoja">Verificando horário...</p>
+          <h1>O cheirinho de pão quente que <span>abraça</span> o seu dia</h1>
+          <p>Pães artesanais, bolos caseiros e salgados feitos com carinho desde 1998. Tudo fresquinho, saindo do forno várias vezes ao dia.</p>
+          <div class="hero__botoes">
+            <a href="#cardapio" class="botao botao--principal">Ver cardápio</a>
+            <a href="#contato" class="botao botao--secundario">Fale conosco</a>
+          </div>
+        </div>
+        <div class="hero__imagem" aria-hidden="true">
+          <div class="hero__circulo">🥐</div>
+          <span class="flutuante f1">🍞</span>
+          <span class="flutuante f2">🧁</span>
+          <span class="flutuante f3">☕</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DIFERENCIAIS ===== -->
+    <section class="diferenciais">
+      <div class="container diferenciais__grade">
+        <div class="diferencial revelar">
+          <span>🔥</span>
+          <h3>Fornadas o dia todo</h3>
+          <p>Pão quentinho às 6h, 11h e 17h.</p>
+        </div>
+        <div class="diferencial revelar">
+          <span>🌾</span>
+          <h3>Ingredientes selecionados</h3>
+          <p>Farinha especial e fermentação natural.</p>
+        </div>
+        <div class="diferencial revelar">
+          <span>🛵</span>
+          <h3>Entrega no bairro</h3>
+          <p>Peça pelo WhatsApp e receba em casa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOBRE ===== -->
+    <section class="sobre secao" id="sobre">
+      <div class="container sobre__conteudo">
+        <div class="sobre__imagem revelar" aria-hidden="true">👨‍🍳</div>
+        <div class="sobre__texto revelar">
+          <p class="subtitulo">Nossa história</p>
+          <h2>Tradição de família, sabor de casa</h2>
+          <p>A Pão Dourado nasceu na cozinha da Dona Maria, que fazia pães para os vizinhos. A receita fez tanto sucesso que virou padaria — e hoje é a terceira geração da família que acorda cedo para preparar tudo com o mesmo cuidado.</p>
+          <!-- Números animados: o JavaScript conta de 0 até o valor de data-alvo -->
+          <div class="numeros">
+            <div><strong class="contador" data-alvo="28">0</strong><span>anos de história</span></div>
+            <div><strong class="contador" data-alvo="40">0</strong><span>produtos diferentes</span></div>
+            <div><strong class="contador" data-alvo="1500">0</strong><span>clientes por semana</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CARDÁPIO ===== -->
+    <section class="cardapio secao" id="cardapio">
+      <div class="container">
+        <div class="cabecalho-secao">
+          <p class="subtitulo">Feito hoje</p>
+          <h2>Nosso cardápio</h2>
+          <p>Escolha seus favoritos e monte seu pedido. Enviamos tudo direto para o nosso WhatsApp!</p>
+        </div>
+
+        <!-- Botões de filtro: o data-filtro diz qual categoria mostrar -->
+        <div class="filtros" id="filtros">
+          <button class="filtro ativo" data-filtro="todos">Todos</button>
+          <button class="filtro" data-filtro="paes">Pães</button>
+          <button class="filtro" data-filtro="doces">Doces</button>
+          <button class="filtro" data-filtro="salgados">Salgados</button>
+          <button class="filtro" data-filtro="bebidas">Bebidas</button>
+        </div>
+
+        <!-- Os cards de produto são criados pelo JavaScript dentro desta div -->
+        <div class="produtos" id="listaProdutos"></div>
+      </div>
+    </section>
+
+    <!-- ===== DEPOIMENTOS ===== -->
+    <section class="depoimentos secao" id="depoimentos">
+      <div class="container">
+        <div class="cabecalho-secao">
+          <p class="subtitulo">Quem prova, volta</p>
+          <h2>O que dizem nossos clientes</h2>
+        </div>
+        <div class="depoimentos__grade">
+          <blockquote class="depoimento revelar">
+            <p class="estrelas">★★★★★</p>
+            <p>"O melhor pão francês do bairro! Crocante por fora e macio por dentro. Venho todo dia de manhã."</p>
+            <cite>— Ana Paula</cite>
+          </blockquote>
+          <blockquote class="depoimento revelar">
+            <p class="estrelas">★★★★★</p>
+            <p>"Encomendei o bolo de aniversário da minha filha e foi um sucesso. Atendimento nota 10!"</p>
+            <cite>— Carlos Eduardo</cite>
+          </blockquote>
+          <blockquote class="depoimento revelar">
+            <p class="estrelas">★★★★★</p>
+            <p>"Peço pelo WhatsApp e chega quentinho em casa. O pão de queijo é viciante."</p>
+            <cite>— Juliana Souza</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTATO ===== -->
+    <section class="contato secao" id="contato">
+      <div class="container contato__conteudo">
+        <div class="contato__info revelar">
+          <p class="subtitulo">Venha nos visitar</p>
+          <h2>Estamos esperando você</h2>
+          <ul class="info-lista">
+            <li>📍 Rua das Flores, 123 — Centro</li>
+            <li>📞 (11) 99999-9999</li>
+            <li>🕕 Seg a Sáb: 6h às 20h</li>
+            <li>🕖 Domingo: 7h às 13h</li>
+          </ul>
+        </div>
+
+        <!-- Formulário: o JavaScript valida e envia a mensagem pelo WhatsApp -->
+        <form class="formulario revelar" id="formContato" novalidate>
+          <h3>Mande uma mensagem</h3>
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" placeholder="Ex.: Maria Silva">
+          <small class="erro" id="erroNome"></small>
+
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" rows="4" placeholder="Quero encomendar um bolo para sábado..."></textarea>
+          <small class="erro" id="erroMensagem"></small>
+
+          <button type="submit" class="botao botao--principal">Enviar pelo WhatsApp</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== RODAPÉ ===== -->
+  <footer class="rodape">
+    <div class="container">
+      <p class="logo">🥖 Pão <span>Dourado</span></p>
+      <p>© <span id="ano"></span> Padaria Pão Dourado. Feito com ❤️ e muita farinha.</p>
+    </div>
+  </footer>
+
+  <!-- ===== CARRINHO (painel lateral) ===== -->
+  <div class="carrinho-fundo" id="carrinhoFundo"></div>
+  <aside class="carrinho" id="carrinho" aria-label="Seu pedido">
+    <div class="carrinho__topo">
+      <h3>Seu pedido</h3>
+      <button class="fechar" id="fecharCarrinho" aria-label="Fechar">✕</button>
+    </div>
+    <ul class="carrinho__itens" id="itensCarrinho"></ul>
+    <div class="carrinho__rodape">
+      <p>Total: <strong id="totalCarrinho">R$ 0,00</strong></p>
+      <button class="botao botao--principal" id="finalizarPedido">Enviar pedido pelo WhatsApp</button>
+    </div>
+  </aside>
+
+  <!-- Mensagem rápida que aparece ao adicionar um produto -->
+  <div class="aviso" id="aviso"></div>
+
+  <!-- Botão de voltar ao topo -->
+  <button class="topo" id="botaoTopo" aria-label="Voltar ao topo">↑</button>
+
+  <!-- Nosso JavaScript (fica no final para carregar depois do HTML) -->
+  <script src="script.js"></script>
+</body>
+</html>

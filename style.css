@@ -1,0 +1,469 @@
+/* =========================================================
+   1. VARIÁVEIS (cores e medidas usadas no site todo)
+   Mude aqui e o site inteiro muda junto!
+   ========================================================= */
+:root {
+  --marrom: #5c3a1e;
+  --marrom-escuro: #3b2412;
+  --dourado: #e0a43a;
+  --dourado-claro: #f6d58e;
+  --creme: #fff8ee;
+  --branco: #ffffff;
+  --texto: #4a3a2e;
+  --sombra: 0 10px 30px rgba(92, 58, 30, 0.12);
+  --raio: 16px;
+  --fonte-titulo: 'Playfair Display', serif;
+  --fonte-texto: 'Poppins', sans-serif;
+}
+
+/* =========================================================
+   2. RESET (tira os estilos padrão do navegador)
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* padding não aumenta o tamanho da caixa */
+}
+
+html {
+  scroll-behavior: smooth; /* rolagem suave ao clicar no menu */
+  scroll-padding-top: 80px; /* compensa a altura do menu fixo */
+}
+
+body {
+  font-family: var(--fonte-texto);
+  color: var(--texto);
+  background: var(--creme);
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+h1, h2, h3 { font-family: var(--fonte-titulo); color: var(--marrom-escuro); line-height: 1.2; }
+
+/* =========================================================
+   3. CLASSES REUTILIZÁVEIS
+   ========================================================= */
+.container {
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;   /* centraliza */
+  padding: 0 20px;
+}
+
+.secao { padding: 90px 0; }
+
+.subtitulo {
+  color: var(--dourado);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
+.cabecalho-secao { text-align: center; max-width: 600px; margin: 0 auto 50px; }
+.cabecalho-secao h2 { font-size: 2.4rem; margin-bottom: 12px; }
+
+.botao {
+  display: inline-block;
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.botao:hover { transform: translateY(-3px); }
+
+.botao--principal {
+  background: var(--dourado);
+  color: var(--marrom-escuro);
+  box-shadow: 0 8px 20px rgba(224, 164, 58, 0.4);
+}
+.botao--principal:hover { background: var(--dourado-claro); }
+
+.botao--secundario {
+  border: 2px solid var(--marrom);
+  color: var(--marrom);
+}
+.botao--secundario:hover { background: var(--marrom); color: var(--branco); }
+
+/* Animação de "aparecer ao rolar": o JS adiciona a classe .visivel */
+.revelar {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+.revelar.visivel { opacity: 1; transform: translateY(0); }
+
+/* =========================================================
+   4. CABEÇALHO
+   ========================================================= */
+.header {
+  position: fixed;   /* fica preso no topo */
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 18px 0;
+  transition: background 0.3s, box-shadow 0.3s, padding 0.3s;
+}
+/* O JS adiciona .rolado quando a página desce */
+.header.rolado {
+  background: var(--branco);
+  box-shadow: var(--sombra);
+  padding: 12px 0;
+}
+
+.header__conteudo { display: flex; align-items: center; justify-content: space-between; }
+
+.logo { font-family: var(--fonte-titulo); font-size: 1.6rem; font-weight: 700; color: var(--marrom-escuro); }
+.logo span { color: var(--dourado); }
+
+.menu { display: flex; align-items: center; gap: 28px; }
+.menu a { font-weight: 500; position: relative; }
+
+/* Linha dourada que cresce embaixo do link ao passar o mouse */
+.menu a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0; height: 2px;
+  background: var(--dourado);
+  transition: width 0.3s;
+}
+.menu a:hover::after { width: 100%; }
+
+.carrinho-botao {
+  position: relative;
+  font-size: 1.3rem;
+  background: var(--branco);
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  box-shadow: var(--sombra);
+}
+.carrinho-contador {
+  position: absolute;
+  top: -4px; right: -4px;
+  background: var(--marrom);
+  color: var(--branco);
+  font-size: 0.7rem;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+/* Botão hambúrguer (escondido no computador) */
+.menu-botao { display: none; flex-direction: column; gap: 5px; }
+.menu-botao span { width: 26px; height: 3px; background: var(--marrom-escuro); border-radius: 3px; transition: 0.3s; }
+
+/* =========================================================
+   5. HERO
+   ========================================================= */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 90px;
+  background: radial-gradient(circle at 80% 40%, var(--dourado-claro) 0%, var(--creme) 55%);
+  overflow: hidden;
+}
+
+.hero__conteudo { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 40px; }
+
+.status {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  background: var(--branco);
+}
+.status.aberto { color: #1e7b34; }
+.status.fechado { color: #b3261e; }
+
+.hero h1 { font-size: 3.4rem; margin-bottom: 20px; }
+.hero h1 span { color: var(--dourado); font-style: italic; }
+.hero__texto > p { font-size: 1.1rem; margin-bottom: 32px; max-width: 500px; }
+.hero__botoes { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.hero__imagem { position: relative; display: grid; place-items: center; }
+.hero__circulo {
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--dourado), #c7832a);
+  display: grid;
+  place-items: center;
+  font-size: 11rem;
+  box-shadow: 0 30px 60px rgba(199, 131, 42, 0.35);
+}
+
+/* Emojis que ficam "flutuando" */
+.flutuante {
+  position: absolute;
+  font-size: 3rem;
+  background: var(--branco);
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--sombra);
+  animation: flutuar 4s ease-in-out infinite;
+}
+.f1 { top: 5%;  left: 8%; }
+.f2 { bottom: 8%; left: 2%; animation-delay: 1s; }
+.f3 { top: 20%; right: 2%; animation-delay: 2s; }
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-18px); }
+}
+
+/* =========================================================
+   6. DIFERENCIAIS
+   ========================================================= */
+.diferenciais { margin-top: -50px; position: relative; }
+.diferenciais__grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.diferencial {
+  background: var(--branco);
+  padding: 30px;
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+.diferencial span { font-size: 2.5rem; }
+.diferencial h3 { margin: 10px 0 6px; font-size: 1.25rem; }
+
+/* =========================================================
+   7. SOBRE
+   ========================================================= */
+.sobre__conteudo { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; }
+.sobre__imagem {
+  aspect-ratio: 1;
+  border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%; /* formato "orgânico" */
+  background: linear-gradient(145deg, var(--marrom), var(--marrom-escuro));
+  display: grid;
+  place-items: center;
+  font-size: 10rem;
+}
+.sobre__texto h2 { font-size: 2.4rem; margin-bottom: 18px; }
+
+.numeros { display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap; }
+.numeros strong { display: block; font-family: var(--fonte-titulo); font-size: 2.4rem; color: var(--dourado); }
+.numeros span { font-size: 0.9rem; }
+
+/* =========================================================
+   8. CARDÁPIO
+   ========================================================= */
+.cardapio { background: var(--branco); }
+
+.filtros { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+.filtro {
+  padding: 10px 22px;
+  border-radius: 50px;
+  border: 2px solid var(--dourado-claro);
+  font-weight: 500;
+  color: var(--texto);
+  transition: 0.2s;
+}
+.filtro:hover, .filtro.ativo { background: var(--dourado); border-color: var(--dourado); color: var(--marrom-escuro); }
+
+/* auto-fill + minmax = a grade se ajusta sozinha ao tamanho da tela */
+.produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+
+.produto {
+  background: var(--creme);
+  border-radius: var(--raio);
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: surgir 0.4s ease;
+}
+.produto:hover { transform: translateY(-8px); box-shadow: var(--sombra); }
+.produto__emoji { font-size: 4rem; }
+.produto h3 { font-size: 1.2rem; margin: 10px 0 6px; }
+.produto p { font-size: 0.9rem; min-height: 45px; }
+.produto__preco { display: block; font-size: 1.3rem; font-weight: 600; color: var(--marrom); margin: 12px 0; }
+.produto .botao { padding: 10px 22px; font-size: 0.9rem; }
+
+@keyframes surgir {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* =========================================================
+   9. DEPOIMENTOS
+   ========================================================= */
+.depoimentos__grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.depoimento {
+  background: var(--branco);
+  padding: 30px;
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  border-top: 4px solid var(--dourado);
+}
+.estrelas { color: var(--dourado); font-size: 1.2rem; margin-bottom: 10px; }
+.depoimento cite { display: block; margin-top: 14px; font-weight: 600; font-style: normal; color: var(--marrom); }
+
+/* =========================================================
+   10. CONTATO
+   ========================================================= */
+.contato { background: var(--marrom-escuro); color: var(--creme); }
+.contato h2 { color: var(--branco); font-size: 2.4rem; margin-bottom: 20px; }
+.contato__conteudo { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+.info-lista { list-style: none; display: grid; gap: 14px; font-size: 1.05rem; }
+
+.formulario {
+  background: var(--branco);
+  color: var(--texto);
+  padding: 34px;
+  border-radius: var(--raio);
+  display: flex;
+  flex-direction: column;
+}
+.formulario h3 { margin-bottom: 18px; font-size: 1.5rem; }
+.formulario label { font-weight: 500; margin-bottom: 6px; }
+.formulario input, .formulario textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border: 2px solid #eadfd2;
+  border-radius: 10px;
+  width: 100%;
+  resize: vertical;
+  outline: none;
+  transition: border 0.2s;
+}
+.formulario input:focus, .formulario textarea:focus { border-color: var(--dourado); }
+.formulario .invalido { border-color: #b3261e; }
+.erro { color: #b3261e; min-height: 20px; margin-bottom: 8px; }
+
+/* =========================================================
+   11. RODAPÉ
+   ========================================================= */
+.rodape { background: #2a190c; color: var(--dourado-claro); text-align: center; padding: 30px 0; }
+.rodape .logo { color: var(--branco); margin-bottom: 6px; }
+
+/* =========================================================
+   12. CARRINHO (painel lateral)
+   ========================================================= */
+.carrinho {
+  position: fixed;
+  top: 0; right: 0;
+  width: 380px; max-width: 100%;
+  height: 100%;
+  background: var(--branco);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%); /* escondido fora da tela à direita */
+  transition: transform 0.35s ease;
+}
+.carrinho.aberto { transform: translateX(0); } /* desliza para dentro */
+
+.carrinho-fundo {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none; /* não bloqueia cliques enquanto invisível */
+  transition: opacity 0.3s;
+}
+.carrinho-fundo.aberto { opacity: 1; pointer-events: auto; }
+
+.carrinho__topo { display: flex; justify-content: space-between; align-items: center; padding: 22px; border-bottom: 1px solid #eee; }
+.fechar { font-size: 1.3rem; color: var(--texto); }
+
+.carrinho__itens { list-style: none; flex: 1; overflow-y: auto; padding: 10px 22px; }
+.carrinho__item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px dashed #eee; }
+.carrinho__item .emoji { font-size: 2rem; }
+.carrinho__item .info { flex: 1; }
+.carrinho__item .info small { color: #8a7a6c; }
+.quantidade { display: flex; align-items: center; gap: 8px; }
+.quantidade button {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--creme);
+  font-weight: 600;
+  color: var(--marrom);
+}
+.carrinho__vazio { text-align: center; padding: 40px 0; color: #8a7a6c; }
+
+.carrinho__rodape { padding: 22px; border-top: 1px solid #eee; display: grid; gap: 14px; }
+.carrinho__rodape p { font-size: 1.15rem; }
+
+/* =========================================================
+   13. AVISO E BOTÃO TOPO
+   ========================================================= */
+.aviso {
+  position: fixed;
+  bottom: 30px; left: 50%;
+  transform: translate(-50%, 100px);
+  background: var(--marrom-escuro);
+  color: var(--branco);
+  padding: 12px 24px;
+  border-radius: 50px;
+  z-index: 400;
+  opacity: 0;
+  transition: 0.4s;
+}
+.aviso.mostrar { transform: translate(-50%, 0); opacity: 1; }
+
+.topo {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--dourado);
+  color: var(--marrom-escuro);
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: var(--sombra);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 50;
+}
+.topo.mostrar { opacity: 1; pointer-events: auto; }
+
+/* =========================================================
+   14. RESPONSIVIDADE (ajustes para telas menores)
+   ========================================================= */
+@media (max-width: 900px) {
+  .hero__conteudo, .sobre__conteudo, .contato__conteudo { grid-template-columns: minmax(0, 1fr); }
+  .hero { text-align: center; }
+  .hero__texto > p { margin-left: auto; margin-right: auto; }
+  .hero__botoes { justify-content: center; }
+  .hero h1 { font-size: 2.5rem; }
+  .hero__circulo { width: 260px; height: 260px; font-size: 7rem; }
+  .sobre__imagem { max-width: 320px; margin: 0 auto; font-size: 7rem; }
+  .diferenciais { margin-top: 0; padding-top: 40px; }
+}
+
+@media (max-width: 768px) {
+  .menu-botao { display: flex; z-index: 150; }
+
+  /* O menu vira um painel que desce do topo */
+  .menu {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    flex-direction: column;
+    padding: 90px 0 30px;
+    background: var(--branco);
+    box-shadow: var(--sombra);
+    transform: translateY(-100%);
+    transition: transform 0.35s;
+  }
+  .menu.aberto { transform: translateY(0); }
+
+  /* Hambúrguer vira um "X" quando o menu abre */
+  .menu-botao.ativo span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .menu-botao.ativo span:nth-child(2) { opacity: 0; }
+  .menu-botao.ativo span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  .diferenciais__grade { grid-template-columns: 1fr; }
+  .secao { padding: 70px 0; }
+  .cabecalho-secao h2, .sobre__texto h2, .contato h2 { font-size: 2rem; }
+  .flutuante { width: 60px; height: 60px; font-size: 2rem; }
+}
