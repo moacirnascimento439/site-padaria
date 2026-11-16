@@ -347,6 +347,17 @@ const observadorNumeros = new IntersectionObserver((entradas) => {
   });
 }, { threshold: 0.5 });
 
+// Contadores com data-desde: calcula os anos completos desde a data informada
+document.querySelectorAll('.contador[data-desde]').forEach((el) => {
+  const [ano, mes, dia] = el.dataset.desde.split('-').map(Number);
+  const hoje = new Date();
+  let anos = hoje.getFullYear() - ano;
+  // Se o aniversário deste ano ainda não chegou, ainda não completou o ano
+  const jaFezAniversario = hoje.getMonth() + 1 > mes || (hoje.getMonth() + 1 === mes && hoje.getDate() >= dia);
+  if (!jaFezAniversario) anos--;
+  el.dataset.alvo = anos;
+});
+
 document.querySelectorAll('.contador').forEach((el) => observadorNumeros.observe(el));
 
 /* =========================================================
