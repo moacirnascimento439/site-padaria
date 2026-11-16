@@ -198,6 +198,20 @@ h1, h2, h3 { font-family: var(--fonte-titulo); color: var(--marrom-escuro); line
   box-shadow: 0 30px 60px rgba(199, 131, 42, 0.35);
 }
 
+/* Foto por cima do emoji: se a foto existir, ela cobre o emoji.
+   Esse padrão (pai relative + filho absolute) é reutilizado nas fotos do site. */
+.hero__circulo, .sobre__imagem, .foto, .produto__emoji {
+  position: relative;
+  overflow: hidden;
+}
+.hero__circulo img, .sobre__imagem img, .foto img, .produto__emoji img {
+  position: absolute;
+  inset: 0;              /* ocupa o espaço todo do pai */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* preenche sem distorcer a foto */
+}
+
 /* Emojis que ficam "flutuando" */
 .flutuante {
   position: absolute;
@@ -280,7 +294,13 @@ h1, h2, h3 { font-family: var(--fonte-titulo); color: var(--marrom-escuro); line
   animation: surgir 0.4s ease;
 }
 .produto:hover { transform: translateY(-8px); box-shadow: var(--sombra); }
-.produto__emoji { font-size: 4rem; }
+.produto__emoji {
+  font-size: 4rem;
+  height: 120px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+}
 .produto h3 { font-size: 1.2rem; margin: 10px 0 6px; }
 .produto p { font-size: 0.9rem; min-height: 45px; }
 .produto__preco { display: block; font-size: 1.3rem; font-weight: 600; color: var(--marrom); margin: 12px 0; }
@@ -292,18 +312,29 @@ h1, h2, h3 { font-family: var(--fonte-titulo); color: var(--marrom-escuro); line
 }
 
 /* =========================================================
-   9. DEPOIMENTOS
+   9. GALERIA
    ========================================================= */
-.depoimentos__grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-.depoimento {
-  background: var(--branco);
-  padding: 30px;
+.galeria__grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.foto {
+  aspect-ratio: 4 / 3;
   border-radius: var(--raio);
+  background: linear-gradient(145deg, var(--dourado-claro), var(--dourado));
+  display: grid;
+  place-items: center;
+  font-size: 5rem;
   box-shadow: var(--sombra);
-  border-top: 4px solid var(--dourado);
 }
-.estrelas { color: var(--dourado); font-size: 1.2rem; margin-bottom: 10px; }
-.depoimento cite { display: block; margin-top: 14px; font-weight: 600; font-style: normal; color: var(--marrom); }
+/* Legenda escura na parte de baixo da foto */
+.foto figcaption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--branco);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  z-index: 1; /* fica acima da foto */
+}
 
 /* =========================================================
    10. CONTATO
@@ -311,7 +342,16 @@ h1, h2, h3 { font-family: var(--fonte-titulo); color: var(--marrom-escuro); line
 .contato { background: var(--marrom-escuro); color: var(--creme); }
 .contato h2 { color: var(--branco); font-size: 2.4rem; margin-bottom: 20px; }
 .contato__conteudo { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-.info-lista { list-style: none; display: grid; gap: 14px; font-size: 1.05rem; }
+.info-lista { list-style: none; display: grid; gap: 12px; font-size: 1.05rem; }
+.info-lista a { text-decoration: underline; text-underline-offset: 3px; }
+
+.mapa {
+  width: 100%;
+  height: 240px;
+  border: 0;
+  border-radius: var(--raio);
+  margin-top: 24px;
+}
 
 .formulario {
   background: var(--branco);
@@ -411,7 +451,7 @@ h1, h2, h3 { font-family: var(--fonte-titulo); color: var(--marrom-escuro); line
 
 .topo {
   position: fixed;
-  bottom: 24px; right: 24px;
+  bottom: 100px; right: 30px; /* fica acima do botão do WhatsApp */
   width: 48px; height: 48px;
   border-radius: 50%;
   background: var(--dourado);
@@ -425,6 +465,34 @@ h1, h2, h3 { font-family: var(--fonte-titulo); color: var(--marrom-escuro); line
   z-index: 50;
 }
 .topo.mostrar { opacity: 1; pointer-events: auto; }
+
+/* Botão flutuante do WhatsApp */
+.whatsapp-flutuante {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 50px;
+  background: #25d366; /* verde oficial do WhatsApp */
+  color: var(--branco);
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+  animation: pulsar 2.5s infinite;
+  transition: transform 0.2s;
+}
+.whatsapp-flutuante:hover { transform: scale(1.06); }
+.whatsapp-flutuante svg { width: 34px; height: 34px; }
+.whatsapp-flutuante__texto { padding-right: 8px; }
+
+/* "Onda" que chama a atenção para o botão */
+@keyframes pulsar {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  70%  { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
 
 /* =========================================================
    14. RESPONSIVIDADE (ajustes para telas menores)
@@ -466,4 +534,6 @@ h1, h2, h3 { font-family: var(--fonte-titulo); color: var(--marrom-escuro); line
   .secao { padding: 70px 0; }
   .cabecalho-secao h2, .sobre__texto h2, .contato h2 { font-size: 2rem; }
   .flutuante { width: 60px; height: 60px; font-size: 2rem; }
+  .whatsapp-flutuante__texto { display: none; } /* no celular fica só o ícone */
+  .topo { right: 28px; bottom: 96px; }
 }

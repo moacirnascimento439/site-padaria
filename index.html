@@ -4,8 +4,8 @@
   <!-- ===== CONFIGURAÇÕES BÁSICAS DA PÁGINA ===== -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Padaria Pão Dourado | Pães quentinhos todo dia</title>
-  <meta name="description" content="Padaria Pão Dourado: pães artesanais, bolos, salgados e café fresquinho. Faça seu pedido pelo WhatsApp!">
+  <title>Panificadora Brasil | Jacobina-BA</title>
+  <meta name="description" content="Panificadora Brasil em Jacobina-BA: pães quentinhos, bolos, salgados e café. Rua João Teixeira, Peru. Peça pelo WhatsApp (74) 3622-4747.">
 
   <!-- Ícone da aba do navegador (um emoji de pão, sem precisar de arquivo) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥖</text></svg>">
@@ -23,7 +23,7 @@
   <!-- ===== CABEÇALHO / MENU ===== -->
   <header class="header" id="header">
     <div class="container header__conteudo">
-      <a href="#inicio" class="logo">🥖 Pão <span>Dourado</span></a>
+      <a href="#inicio" class="logo">🥖 Panificadora <span>Brasil</span></a>
 
       <!-- Botão "hambúrguer" que só aparece no celular -->
       <button class="menu-botao" id="menuBotao" aria-label="Abrir menu" aria-expanded="false">
@@ -34,7 +34,7 @@
         <a href="#inicio">Início</a>
         <a href="#sobre">Sobre</a>
         <a href="#cardapio">Cardápio</a>
-        <a href="#depoimentos">Depoimentos</a>
+        <a href="#galeria">Galeria</a>
         <a href="#contato">Contato</a>
         <!-- Botão do carrinho: o número é atualizado pelo JavaScript -->
         <button class="carrinho-botao" id="abrirCarrinho" aria-label="Abrir pedido">
@@ -52,17 +52,24 @@
           <!-- O JavaScript troca este texto para "Aberto agora" ou "Fechado agora" -->
           <p class="status" id="statusLoja">Verificando horário...</p>
           <h1>O cheirinho de pão quente que <span>abraça</span> o seu dia</h1>
-          <p>Pães artesanais, bolos caseiros e salgados feitos com carinho desde 1998. Tudo fresquinho, saindo do forno várias vezes ao dia.</p>
+          <p>Pães quentinhos, bolos, salgados e café no bairro Peru, em Jacobina. Uma padaria nova, inaugurada em julho de 2025, feita para a vizinhança.</p>
           <div class="hero__botoes">
             <a href="#cardapio" class="botao botao--principal">Ver cardápio</a>
-            <a href="#contato" class="botao botao--secundario">Fale conosco</a>
+            <a href="#contato" class="botao botao--secundario">Como chegar</a>
           </div>
         </div>
-        <div class="hero__imagem" aria-hidden="true">
-          <div class="hero__circulo">🥐</div>
-          <span class="flutuante f1">🍞</span>
-          <span class="flutuante f2">🧁</span>
-          <span class="flutuante f3">☕</span>
+        <div class="hero__imagem">
+          <!--
+            FOTO: coloque a foto em img/fachada.jpg.
+            Se o arquivo não existir, o onerror remove a imagem e o emoji aparece no lugar.
+          -->
+          <div class="hero__circulo">
+            <span aria-hidden="true">🥐</span>
+            <img src="img/fachada.jpg" alt="Fachada da Panificadora Brasil" onerror="this.remove()">
+          </div>
+          <span class="flutuante f1" aria-hidden="true">🍞</span>
+          <span class="flutuante f2" aria-hidden="true">🧁</span>
+          <span class="flutuante f3" aria-hidden="true">☕</span>
         </div>
       </div>
     </section>
@@ -72,18 +79,18 @@
       <div class="container diferenciais__grade">
         <div class="diferencial revelar">
           <span>🔥</span>
-          <h3>Fornadas o dia todo</h3>
-          <p>Pão quentinho às 6h, 11h e 17h.</p>
+          <h3>Pão quentinho cedo</h3>
+          <p>Abrimos às 6h, de segunda a sábado.</p>
         </div>
         <div class="diferencial revelar">
-          <span>🌾</span>
-          <h3>Ingredientes selecionados</h3>
-          <p>Farinha especial e fermentação natural.</p>
+          <span>🥖</span>
+          <h3>Feito todo dia</h3>
+          <p>Pães, bolos e salgados preparados na hora.</p>
         </div>
         <div class="diferencial revelar">
-          <span>🛵</span>
-          <h3>Entrega no bairro</h3>
-          <p>Peça pelo WhatsApp e receba em casa.</p>
+          <span>💬</span>
+          <h3>Peça pelo WhatsApp</h3>
+          <p>Monte seu pedido no site e envie pra gente.</p>
         </div>
       </div>
     </section>
@@ -91,16 +98,20 @@
     <!-- ===== SOBRE ===== -->
     <section class="sobre secao" id="sobre">
       <div class="container sobre__conteudo">
-        <div class="sobre__imagem revelar" aria-hidden="true">👨‍🍳</div>
+        <!-- FOTO: img/interior.jpg (se não existir, aparece o emoji) -->
+        <div class="sobre__imagem revelar">
+          <span aria-hidden="true">👨‍🍳</span>
+          <img src="img/interior.jpg" alt="Interior da Panificadora Brasil" onerror="this.remove()">
+        </div>
         <div class="sobre__texto revelar">
           <p class="subtitulo">Nossa história</p>
-          <h2>Tradição de família, sabor de casa</h2>
-          <p>A Pão Dourado nasceu na cozinha da Dona Maria, que fazia pães para os vizinhos. A receita fez tanto sucesso que virou padaria — e hoje é a terceira geração da família que acorda cedo para preparar tudo com o mesmo cuidado.</p>
+          <h2>Uma padaria nova no coração do Peru</h2>
+          <p>A Panificadora Brasil abriu as portas em julho de 2025, na Rua João Teixeira, bairro Peru, em Jacobina. Nasceu com um objetivo simples: oferecer pão fresquinho, atendimento caprichado e aquele cafezinho que faz a gente se sentir em casa.</p>
           <!-- Números animados: o JavaScript conta de 0 até o valor de data-alvo -->
           <div class="numeros">
-            <div><strong class="contador" data-alvo="28">0</strong><span>anos de história</span></div>
-            <div><strong class="contador" data-alvo="40">0</strong><span>produtos diferentes</span></div>
-            <div><strong class="contador" data-alvo="1500">0</strong><span>clientes por semana</span></div>
+            <div><strong class="contador" data-alvo="2025">0</strong><span>ano de inauguração</span></div>
+            <div><strong class="contador" data-alvo="6" data-sufixo="h">0</strong><span>pão quentinho desde cedo</span></div>
+            <div><strong class="contador" data-alvo="6" data-sufixo=" dias">0</strong><span>abertos por semana</span></div>
           </div>
         </div>
       </div>
@@ -129,29 +140,30 @@
       </div>
     </section>
 
-    <!-- ===== DEPOIMENTOS ===== -->
-    <section class="depoimentos secao" id="depoimentos">
+    <!-- ===== GALERIA ===== -->
+    <section class="galeria secao" id="galeria">
       <div class="container">
         <div class="cabecalho-secao">
-          <p class="subtitulo">Quem prova, volta</p>
-          <h2>O que dizem nossos clientes</h2>
+          <p class="subtitulo">Venha conhecer</p>
+          <h2>Nosso espaço</h2>
         </div>
-        <div class="depoimentos__grade">
-          <blockquote class="depoimento revelar">
-            <p class="estrelas">★★★★★</p>
-            <p>"O melhor pão francês do bairro! Crocante por fora e macio por dentro. Venho todo dia de manhã."</p>
-            <cite>— Ana Paula</cite>
-          </blockquote>
-          <blockquote class="depoimento revelar">
-            <p class="estrelas">★★★★★</p>
-            <p>"Encomendei o bolo de aniversário da minha filha e foi um sucesso. Atendimento nota 10!"</p>
-            <cite>— Carlos Eduardo</cite>
-          </blockquote>
-          <blockquote class="depoimento revelar">
-            <p class="estrelas">★★★★★</p>
-            <p>"Peço pelo WhatsApp e chega quentinho em casa. O pão de queijo é viciante."</p>
-            <cite>— Juliana Souza</cite>
-          </blockquote>
+        <!-- FOTOS: img/galeria-1.jpg, img/galeria-2.jpg, img/galeria-3.jpg -->
+        <div class="galeria__grade">
+          <figure class="foto revelar">
+            <span aria-hidden="true">🏪</span>
+            <img src="img/galeria-1.jpg" alt="Panificadora Brasil" onerror="this.remove()">
+            <figcaption>Nossa loja</figcaption>
+          </figure>
+          <figure class="foto revelar">
+            <span aria-hidden="true">🥖</span>
+            <img src="img/galeria-2.jpg" alt="Pães da Panificadora Brasil" onerror="this.remove()">
+            <figcaption>Pães saindo do forno</figcaption>
+          </figure>
+          <figure class="foto revelar">
+            <span aria-hidden="true">🍰</span>
+            <img src="img/galeria-3.jpg" alt="Doces da Panificadora Brasil" onerror="this.remove()">
+            <figcaption>Bolos e doces</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -163,11 +175,17 @@
           <p class="subtitulo">Venha nos visitar</p>
           <h2>Estamos esperando você</h2>
           <ul class="info-lista">
-            <li>📍 Rua das Flores, 123 — Centro</li>
-            <li>📞 (11) 99999-9999</li>
-            <li>🕕 Seg a Sáb: 6h às 20h</li>
-            <li>🕖 Domingo: 7h às 13h</li>
+            <li>📍 Rua João Teixeira — Peru, Jacobina-BA</li>
+            <li>📞 <a href="tel:+557436224747">(74) 3622-4747</a></li>
+            <li>💬 <a href="https://wa.me/557436224747" target="_blank" rel="noopener">WhatsApp: (74) 3622-4747</a></li>
+            <li>🕕 Segunda a Sexta: 06:00 às 20:30</li>
+            <li>🕕 Sábado: 06:00 às 15:00</li>
+            <li>🚫 Domingo: fechado</li>
           </ul>
+          <!-- Mapa do Google: não precisa de chave, só o endereço no link -->
+          <iframe class="mapa"
+            src="https://maps.google.com/maps?q=Rua%20Jo%C3%A3o%20Teixeira%2C%20Peru%2C%20Jacobina%20-%20BA&z=16&output=embed"
+            title="Mapa da Panificadora Brasil" loading="lazy"></iframe>
         </div>
 
         <!-- Formulário: o JavaScript valida e envia a mensagem pelo WhatsApp -->
@@ -190,8 +208,9 @@
   <!-- ===== RODAPÉ ===== -->
   <footer class="rodape">
     <div class="container">
-      <p class="logo">🥖 Pão <span>Dourado</span></p>
-      <p>© <span id="ano"></span> Padaria Pão Dourado. Feito com ❤️ e muita farinha.</p>
+      <p class="logo">🥖 Panificadora <span>Brasil</span></p>
+      <p>Rua João Teixeira — Peru, Jacobina-BA · (74) 3622-4747</p>
+      <p>© <span id="ano"></span> Panificadora Brasil. Feito com ❤️ e muita farinha.</p>
     </div>
   </footer>
 
@@ -211,6 +230,13 @@
 
   <!-- Mensagem rápida que aparece ao adicionar um produto -->
   <div class="aviso" id="aviso"></div>
+
+  <!-- Botão flutuante do WhatsApp (o ícone é um SVG, desenhado direto no código) -->
+  <a class="whatsapp-flutuante" href="https://wa.me/557436224747?text=Ol%C3%A1%2C%20Panificadora%20Brasil!"
+     target="_blank" rel="noopener" aria-label="Falar no WhatsApp (74) 3622-4747">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 6.9L3 29l6.5-2c1.9 1 4.1 1.6 6.5 1.6 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.3c-2.1 0-4.1-.6-5.8-1.6l-.4-.2-3.9 1.2 1.2-3.7-.3-.4c-1.1-1.7-1.7-3.7-1.7-5.8C5.1 9.9 10 5.1 16 5.1s10.9 4.8 10.9 10.7S22 26.3 16 26.3zm6-8c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1c-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2s0-.5.1-.6l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.1-1.2 2.7 1.2 3.1 1.4 3.4c.2.2 2.3 3.5 5.6 4.9 2.8 1.1 3.3.9 3.9.8.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
+    <span class="whatsapp-flutuante__texto">(74) 3622-4747</span>
+  </a>
 
   <!-- Botão de voltar ao topo -->
   <button class="topo" id="botaoTopo" aria-label="Voltar ao topo">↑</button>

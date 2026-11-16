@@ -2,9 +2,12 @@
    CONFIGURAÇÕES — troque pelos dados reais da padaria
    ========================================================= */
 // Número do WhatsApp com código do país (55) + DDD + número, só dígitos
-const WHATSAPP = '5511999999999';
+const WHATSAPP = '557436224747'; // (74) 3622-4747
 
 // Lista de produtos. Para adicionar um novo, copie uma linha e mude os dados.
+// ⚠️ Os preços abaixo são EXEMPLOS: confira e troque pelos preços reais.
+// FOTO: salve a foto do produto como img/produtos/ID.jpg (ex.: img/produtos/1.jpg
+// para o Pão Francês). Sem foto, o site mostra o emoji.
 const produtos = [
   { id: 1,  nome: 'Pão Francês',       descricao: 'Crocante por fora, macio por dentro (unid.).', preco: 0.90,  categoria: 'paes',     emoji: '🥖' },
   { id: 2,  nome: 'Pão de Fermentação Natural', descricao: 'Massa madre, 24h de fermentação.', preco: 18.00, categoria: 'paes',     emoji: '🍞' },
@@ -75,19 +78,44 @@ botaoTopo.addEventListener('click', () => window.scrollTo({ top: 0 }));
 /* =========================================================
    2. STATUS "ABERTO / FECHADO" pelo horário atual
    ========================================================= */
+// Horários em minutos desde a meia-noite (6:00 = 6*60 = 360).
+// Índice = dia da semana: 0 = domingo, 1 = segunda ... 6 = sábado. null = fechado.
+const HORARIOS = [
+  null,               // domingo: fechado
+  [6 * 60, 20 * 60 + 30], // segunda: 06:00 às 20:30
+  [6 * 60, 20 * 60 + 30], // terça
+  [6 * 60, 20 * 60 + 30], // quarta
+  [6 * 60, 20 * 60 + 30], // quinta
+  [6 * 60, 20 * 60 + 30], // sexta
+  [6 * 60, 15 * 60],      // sábado: 06:00 às 15:00
+];
+
 function atualizarStatus() {
   const agora = new Date();
-  const dia = agora.getDay();     // 0 = domingo, 6 = sábado
-  const hora = agora.getHours();
+  const dia = agora.getDay();
+  const minutos = agora.getHours() * 60 + agora.getMinutes();
+  const horarioHoje = HORARIOS[dia];
 
-  // Domingo: 7h às 13h | Segunda a sábado: 6h às 20h
-  const aberto = dia === 0 ? hora >= 7 && hora < 13 : hora >= 6 && hora < 20;
+  // Está aberto se hoje tem horário e agora está entre a abertura e o fechamento
+  const aberto = horarioHoje !== null && minutos >= horarioHoje[0] && minutos < horarioHoje[1];
+
+  let texto;
+  if (aberto) {
+    texto = '🟢 Aberto agora — venha buscar!';
+  } else if (horarioHoje !== null && minutos < horarioHoje[0]) {
+    texto = '🔴 Fechado agora — abrimos hoje às 6h!';
+  } else if (dia === 6 || dia === 0) {
+    texto = '🔴 Fechado agora — abrimos segunda às 6h!'; // sábado à tarde ou domingo
+  } else {
+    texto = '🔴 Fechado agora — abrimos amanhã às 6h!';
+  }
 
   const status = document.getElementById('statusLoja');
-  status.textContent = aberto ? '🟢 Aberto agora — venha buscar!' : '🔴 Fechado agora — volte amanhã cedo!';
+  status.textContent = texto;
   status.className = 'status ' + (aberto ? 'aberto' : 'fechado');
 }
 atualizarStatus();
+setInterval(atualizarStatus, 60 * 1000); // confere de novo a cada minuto
 
 /* =========================================================
    3. CARDÁPIO: criar os cards e filtrar por categoria
@@ -103,7 +131,10 @@ function mostrarProdutos(categoria) {
   // Monta o HTML de cada card e junta tudo
   listaProdutos.innerHTML = filtrados.map((p) => `
     <article class="produto">
-      <div class="produto__emoji">${p.emoji}</div>
+      <div class="produto__emoji">
+        ${p.emoji}
+        <img src="img/produtos/${p.id}.jpg" alt="${p.nome}" onerror="this.remove()">
+      </div>
       <h3>${p.nome}</h3>
       <p>${p.descricao}</p>
       <span class="produto__preco">${formatarPreco(p.preco)}</span>
@@ -241,7 +272,7 @@ document.getElementById('finalizarPedido').addEventListener('click', () => {
     return `• ${item.quantidade}x ${p.nome} — ${formatarPreco(p.preco * item.quantidade)}`;
   });
 
-  const mensagem = `Olá, Pão Dourado! Gostaria de fazer um pedido:\n\n${linhas.join('\n')}\n\nTotal: ${formatarPreco(total)}`;
+  const mensagem = `Olá, Panificadora Brasil! Gostaria de fazer um pedido:\n\n${linhas.join('\n')}\n\nTotal: ${formatarPreco(total)}`;
   abrirWhatsApp(mensagem);
 });
 
@@ -302,12 +333,13 @@ const observadorNumeros = new IntersectionObserver((entradas) => {
 
     const elemento = entrada.target;
     const alvo = Number(elemento.dataset.alvo);
+    const sufixo = elemento.dataset.sufixo || ''; // texto depois do número, ex.: "h"
     const duracao = 1500; // milissegundos
     const inicio = performance.now();
 
     function passo(agora) {
       const progresso = Math.min((agora - inicio) / duracao, 1); // de 0 a 1
-      elemento.textContent = Math.floor(progresso * alvo).toLocaleString('pt-BR') + '+';
+      elemento.textContent = Math.floor(progresso * alvo) + sufixo;
       if (progresso < 1) requestAnimationFrame(passo);
     }
     requestAnimationFrame(passo);

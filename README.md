@@ -1,13 +1,16 @@
-# 🥖 Padaria Pão Dourado — Site institucional
+# 🥖 Panificadora Brasil — Site institucional
 
-Site de uma padaria feito com **HTML, CSS e JavaScript puros** (sem frameworks), pensado para **atrair clientes** e **receber pedidos pelo WhatsApp**.
+Site da **Panificadora Brasil** (Rua João Teixeira, Peru — Jacobina-BA · (74) 3622-4747), feito com **HTML, CSS e JavaScript puros** (sem frameworks), pensado para **atrair clientes** e **receber pedidos pelo WhatsApp**.
 
 🔗 **Veja online:** https://moacirnascimento439.github.io/site-padaria/
 
 ## ✨ Funcionalidades
 
 - 📱 **Responsivo**: funciona no celular, tablet e computador (com menu "hambúrguer" no celular)
-- 🟢 **Aberto / Fechado em tempo real**: o site lê o horário e mostra se a padaria está aberta
+- 🟢 **Aberto / Fechado em tempo real**: segue o horário real (seg a sex 06:00–20:30, sáb 06:00–15:00, domingo fechado)
+- 🟩 **Botão flutuante do WhatsApp** sempre visível, com o número da panificadora
+- 🗺️ **Mapa do Google** com a localização, direto na seção de contato
+- 📷 **Galeria de fotos** com troca automática: sem foto, mostra um emoji; com foto, mostra a foto
 - 🍞 **Cardápio com filtros**: Pães, Doces, Salgados e Bebidas
 - 🛒 **Carrinho de pedidos**: adicionar, aumentar/diminuir quantidade, total automático
 - 💾 **Carrinho salvo**: se o cliente fechar a página, o pedido continua lá (localStorage)
@@ -31,6 +34,7 @@ site-padaria/
 ├── index.html   → o "esqueleto": todo o conteúdo da página
 ├── style.css    → a "roupa": cores, tamanhos, posições e animações
 ├── script.js    → o "cérebro": tudo que reage ao clique do usuário
+├── img/         → fotos do site (veja img/LEIA-ME.md com os nomes dos arquivos)
 └── README.md    → este arquivo de explicação
 ```
 
@@ -51,8 +55,8 @@ O arquivo é dividido em blocos, cada um marcado com um comentário `<!-- ===== 
 | Diferenciais | `<section class="diferenciais">` | 3 cartões com os pontos fortes |
 | Sobre | `<section id="sobre">` | História da padaria + números animados |
 | Cardápio | `<section id="cardapio">` | Botões de filtro + lista de produtos |
-| Depoimentos | `<section id="depoimentos">` | Avaliações de clientes |
-| Contato | `<section id="contato">` | Endereço, horário e formulário |
+| Galeria | `<section id="galeria">` | Fotos do espaço |
+| Contato | `<section id="contato">` | Endereço, horário, mapa e formulário |
 | Rodapé | `<footer>` | Direitos autorais com ano automático |
 | Carrinho | `<aside id="carrinho">` | Painel que desliza da direita |
 
@@ -151,7 +155,18 @@ window.addEventListener('scroll', () => {
 `classList.toggle('classe', condicao)` liga a classe se a condição for verdadeira e desliga se for falsa.
 
 ### Parte 2 — Aberto / Fechado
-`new Date()` pega a data e hora do computador do cliente. `getDay()` dá o dia (0 = domingo) e `getHours()` a hora. Com um `if` simples (escrito como operador ternário `condicao ? a : b`), o site decide qual mensagem mostrar.
+Os horários ficam numa lista `HORARIOS`, um item por dia da semana (0 = domingo). Cada horário está **em minutos desde a meia-noite** (06:00 = 360, 20:30 = 1230), o que facilita comparar meia hora.
+
+`new Date()` pega a data e hora do aparelho do cliente; `getDay()` dá o dia e `getHours() * 60 + getMinutes()` dá os minutos de agora. Se agora está entre a abertura e o fechamento de hoje, está aberto. `setInterval` repete a conferência a cada minuto.
+
+### Truque das fotos com "plano B"
+```html
+<div class="foto">
+  <span>🥖</span>
+  <img src="img/galeria-2.jpg" onerror="this.remove()">
+</div>
+```
+A foto fica **por cima** do emoji (`position: absolute` no CSS). Se o arquivo não existir, o navegador dispara o `onerror`, que remove a imagem, e o emoji aparece. Assim o site nunca mostra "imagem quebrada".
 
 ### Parte 3 — Cardápio e filtros
 ```js
@@ -203,8 +218,8 @@ Os contadores usam `requestAnimationFrame`, que roda uma função a cada quadro 
 | Mudar cores | Variáveis no topo do `style.css` |
 | Mudar produtos/preços | Lista `produtos` no topo do `script.js` |
 | Mudar o WhatsApp | Constante `WHATSAPP` no `script.js` |
-| Mudar horário de funcionamento | Texto no `index.html` + função `atualizarStatus()` |
-| Usar fotos reais | Troque `${p.emoji}` por `<img src="img/${p.id}.jpg" alt="${p.nome}">` e crie a pasta `img/` |
+| Mudar horário de funcionamento | Texto no `index.html` + lista `HORARIOS` no `script.js` |
+| Usar fotos reais | Coloque os arquivos na pasta `img/` com os nomes do `img/LEIA-ME.md` (não precisa mexer no código) |
 | Fazer site de outro negócio | Mantenha a estrutura e troque textos, cores e produtos (serve para pizzaria, cafeteria, loja...) |
 
 **Padrões que valem para qualquer projeto:**
